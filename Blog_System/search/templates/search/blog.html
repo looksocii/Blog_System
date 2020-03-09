@@ -1,0 +1,76 @@
+{% extends "public_base.html" %}
+{% block content %}
+{% load static %}
+<form action="{% url 'blog' blog.id %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-md-12 p-3 mt-3 card shadow bg-white rounded" style="width: 20rem;">
+            <div class="row p-3">
+                <div class="col-md-6">
+                    <h3>{{ blog.title }}</h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    {% if perms.blogger.change_post %}
+                        <a href="{% url 'edit_blog' blog.id %}"><button type="button" class="btn btn-outline-warning mb-2">แก้ไขข้อความ</button></a>
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                    <p>{{ blog.content }}</P>
+                    <small class="font-italic text-right form-text text-muted">{{ blog.create_time }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12 p-3 card shadow bg-white rounded" style="width: 20rem;">
+            <div class="row p-3 mr-1 ml-1">
+                <div class="col-md-12">
+                    {% if com.count > 0 %}
+                        <h5>Comment</h5>
+                    {% else %}
+                        <h5>No Comment</h5>
+                    {% endif %}
+                </div>
+                {% for i in com %}
+                    <div class="col-md-8 card bg-white p-3 m-2">
+                        <div class="row">
+                            <div class="col-md-8" style="padding-right: 0;">
+                                <p>{{ i.content }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-10 text-right" style="padding-right: 2;">
+                                        {% if request.user.username ==  i.user_id.username %}
+                                            <a href="{% url 'edit_com' i.id %}"><img src="{% static '/photo/edit.png' %}" width="20px"></a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-2" style="padding-left: 3;">
+                                        {% if request.user.username ==  i.user_id.username or user.is_superuser %}
+                                            <a href="{% url 'com_remove' blog.id i.id %}"><img src="{% static '/photo/remove.png' %}" width="20px"></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="font-italic text-right form-text text-muted">โดย: {{ i.user_id.username }} เมื่อ: {{ i.create_time }}</small>
+                    </div>
+                {% endfor %}
+                {% if perms.blogger.add_comment %}
+                    <div class="col-md-8 m-2" style="padding-right: 0; padding-left: 0; margin-left: 8;">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+                    </div>
+                    <div class="col-md-8 ml-2">
+                        <div class="row">
+                            <div class="col-md-6" style="padding-left: 0;">
+                                <small class="font-italic form-text text-muted">แสดงความคิดเห็นโดย {{ request.user.username }}</small>
+                            </div>
+                            <div class="col-md-6 text-right" style="padding-right: 0;">
+                                <button type="submit" class="btn btn-outline-warning mb-2">แสดงความคิดเห็น</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

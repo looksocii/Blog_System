@@ -1,0 +1,45 @@
+{% extends "public_base.html" %}
+{% block content %}
+<form action="{% url 'edit_com' com.id %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="form-group col-md-12 p-3 mt-3 card shadow bg-white rounded" style="width: 20rem;">
+            <div class="row p-3">
+                <div class="col-md-6">
+                    <h3>{{ com.post_id.title }}</h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    {% if perms.blogger.change_post %}
+                        <a href="{% url 'edit_blog' blog.id %}"><button type="button" class="btn btn-outline-warning mb-2">แก้ไขข้อความ</button></a>
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                    <p>{{ com.post_id.content }}</P>
+                    <small class="font-italic text-right form-text text-muted">{{ com.post_id.create_time }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12 p-3 card shadow bg-white rounded" style="width: 20rem;">
+            <div class="row p-3 mr-1 ml-1">
+                <div class="col-md-12 mb-2">
+                    <h5>Edit Comment</h5>
+                </div>
+                <div class="col-md-8 mb-2">
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content">{{ com.content }}</textarea>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <small class="font-italic form-text text-muted">โดย {{ com.user_id.username }}</small>
+                        </div>
+                        <div class="col-md-6 mb-2 text-right">
+                            <button type="submit" class="btn btn-outline-warning mb-2">บันทึก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </form>
+{% endblock content %}

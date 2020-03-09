@@ -1,0 +1,53 @@
+{% extends "public_base.html" %}
+{% block content %}
+    <form action="{% url 'edit_blog' blog.id %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group col-md-12 p-3 mt-3 card shadow bg-white rounded">
+                <div class="row p-4">
+                    <div class="col-md-12">
+                        <h2>Edit Blog</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row p-4">
+                            <div class="col-md-1 text-right mt-1">
+                                <h4>Title</h4>
+                            </div>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control" name="title" value="{{ blog.title }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row m-3">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="content">{{ blog.content }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row m-3">
+                            <div class="col-md-12 text-right">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="checkbox" value="Show"
+                                    {% if blog.status == True %}
+                                        checked="true"
+                                    {% endif %}
+                                    >
+                                    <label class="form-check-label" for="inlineRadio1">Show</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="checkbox" value="Hide"
+                                    {% if blog.status == False %}
+                                        checked="true"
+                                    {% endif %}
+                                    >
+                                    <label class="form-check-label" for="inlineRadio2">Hide</label>
+                                </div>
+                                <button type="submit" class="btn btn-outline-warning">แก้ไขเสร็จสิ้น</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock content %}

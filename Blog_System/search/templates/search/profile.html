@@ -1,0 +1,28 @@
+{% extends "public_base.html" %}
+{% block content %}
+{% load static %}
+    <div class="row">
+        <div class="form-group col-md-12 p-3 mt-3 card shadow bg-white rounded" style="width: 20rem;">
+            <div class="row p-3">
+                <div class="col-md-6 text-center">
+                    <img src="{% static '/photo/pro.jpg' %}" class="img-thumbnail" width="400px">
+                </div>
+                <div class="col-md-6">
+                    <h2><b>Profile</b></h2>
+                    <p>Puntakarn Kaewsanghan ( 61070139 )<br>
+                       Faculty of Information Technology students<br>
+                       King Mongkut's Institute of Technology Ladkrabang</p>
+                    <h6><b>Skill</b></h6>
+                    <ul>
+                        <li>Django</li>
+                        <li>Python</li>
+                        <li>HTML</li>
+                        <li>Bootstrap</li>
+                    </ul>
+                   <h6><b>Professor</b></h6>
+                   <p>ดร.บัณฑิต ฐานะโสภณ<br>อาจารย์ คณะเทคโนโลยีสารสนเทศ<br>สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

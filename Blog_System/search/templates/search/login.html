@@ -1,0 +1,32 @@
+{% extends "public_base.html" %}
+{% block content %}
+    <div class="p-5 text-center">
+        <h2>เข้าสู่ระบบ Blog System</h2>
+    </div>
+    <div class="row p-3">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username ( ชื่อผู้ใช้ )</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="ชื่อผู้ใช้" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password ( รหัสผ่าน )</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="รหัสผ่าน" name="password">
+                    {% if error %}
+                        <small class="form-text text-danger text-center">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูก</small>
+                    {% else %}
+                        <small class="form-text text-muted">ตรวจสอบอีเมลหรือชื่อผู้ใช้ และ รหัสผ่านให้ถูกต้องก่อนเข้าสู่ระบบ</small>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-outline-warning btn-lg btn-block">Login</button>
+                <small class="font-italic text-center form-text text-muted">© Copyright 2020 By.Puntakarn</small>
+            </form>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+{% endblock %}

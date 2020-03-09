@@ -1,0 +1,51 @@
+{% extends "public_base.html" %}
+{% block content %}
+{% load static %}
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <form action="{% url 'index' %}" class="form-inline" method="POST">
+                {% csrf_token %}
+                    <div class="form-group mx-sm-2 mb-2">
+                        <input type="text" class="form-control" placeholder="ค้นหาบทความ" name="blog">
+                    </div>
+                    <button type="submit" class="btn btn-outline-warning mb-2">ค้นหา</button>
+                </form>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-sm-12 ml-3">
+            {% if post_all.count == 0 %}
+                <h5>No Data</h2>
+            {% endif %}
+        </div>
+        {% for post in post_all %}
+                <div class="col-sm-3">
+                    <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 16.2rem; height: 16rem;">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{ post.title }}</b></h5>
+                            <p class="card-text" style="font-size: 14px; height:9em; white-space: wrap; overflow: hidden; text-overflow: ellipsis;">{{ post.content }}</p>
+                            <div class="row">
+                                <div class="col-sm-6 mb-3" style="margin-top: -5.5;">
+                                    {% if post.status == False %}
+                                        <img src="{% static '/photo/hide.png' %}" width="30px">
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <a href="{% url 'blog' post.id %}" class="badge badge-pill badge-warning">อ่านเพิ่มเติม</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+    {% if perms.blogger.add_post %}
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 mb-4">
+                <a href="{% url 'post' %}" type="button" type="button" class="btn btn-outline-warning btn-lg btn-block">เขียนบทความใหม่</a>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    {% endif %}
+{% endblock %}
