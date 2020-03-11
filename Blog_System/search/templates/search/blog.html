@@ -1,18 +1,34 @@
 {% extends "public_base.html" %}
-{% block content %}
 {% load static %}
+
+{% block content %}
 <form action="{% url 'blog' blog.id %}" method="POST">
     {% csrf_token %}
     <div class="row">
         <div class="form-group col-md-12 p-3 mt-3 card shadow bg-white rounded" style="width: 20rem;">
-            <div class="row p-3">
-                <div class="col-md-6">
-                    <h3>{{ blog.title }}</h3>
+            <div class="row p-3 mr-1 ml-1 mt-1 mb-1">
+                <div class="col-md-9">
+                    <h3>{{ blog.title }}
+                        {% comment %} ------ แสดง icon เพื่อบอกว่าบทความแสดงอยู่หรือไม่ ------ {% endcomment %}
+                        {% if blog.status == False and user.is_superuser %}
+                            <img src="{% static '/photo/hide.png' %}" width="30px">
+                        {% endif %}
+                        {% comment %} -------------------------------------------------- {% endcomment %}
+                    </h3>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-3 text-right">
+                    {% comment %} -------------------------------------------- เฉพาะคนที่มีสิทธิ์แก้ไขบทความ -------------------------------------------- {% endcomment %}
                     {% if perms.blogger.change_post %}
-                        <a href="{% url 'edit_blog' blog.id %}"><button type="button" class="btn btn-outline-warning mb-2">แก้ไขข้อความ</button></a>
+                        <div class="row">
+                            <div class="col-md-10" style="padding-right: 0;">
+                            <a href="{% url 'edit_blog' blog.id %}"><img src="{% static '/photo/edit.png' %}" width="30px"></a>
+                            </div>
+                            <div class="col-md-2">
+                            <a href="{% url 'post_remove' blog.id %}" onclick="remove()"><img src="{% static '/photo/remove.png' %}" width="30px"></a>
+                            </div>
+                        </div>
                     {% endif %}
+                    {% comment %} ----------------------------------------------------------------------------------------------------------------- {% endcomment %}
                 </div>
                 <div class="col-md-12">
                     <hr>
@@ -24,12 +40,15 @@
         <div class="form-group col-md-12 p-3 card shadow bg-white rounded" style="width: 20rem;">
             <div class="row p-3 mr-1 ml-1">
                 <div class="col-md-12">
+                    {% comment %} เช็คว่ามี Comment ในบทความนั้นๆหรือไม่ {% endcomment %}
                     {% if com.count > 0 %}
                         <h5>Comment</h5>
                     {% else %}
                         <h5>No Comment</h5>
                     {% endif %}
+                    {% comment %} ------------------------------- {% endcomment %}
                 </div>
+                {% comment %} ---------------------------------------------------- loop ดึงข้อมูลความคิดเห็นจาก QuerySet ---------------------------------------------------- {% endcomment %}
                 {% for i in com %}
                     <div class="col-md-8 card bg-white p-3 m-2">
                         <div class="row">
@@ -45,7 +64,7 @@
                                     </div>
                                     <div class="col-md-2" style="padding-left: 3;">
                                         {% if request.user.username ==  i.user_id.username or user.is_superuser %}
-                                            <a href="{% url 'com_remove' blog.id i.id %}"><img src="{% static '/photo/remove.png' %}" width="20px"></a>
+                                            <a href="{% url 'com_remove' blog.id i.id %}" onclick="popup()"><img src="{% static '/photo/remove.png' %}" width="20px"></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -54,6 +73,9 @@
                         <small class="font-italic text-right form-text text-muted">โดย: {{ i.user_id.username }} เมื่อ: {{ i.create_time }}</small>
                     </div>
                 {% endfor %}
+                {% comment %} -------------------------------------------------------------------------------------------------------------------------------------------  {% endcomment %}
+                
+                {% comment %} ----------------------------- แสดงเฉพาะคนที่มีสิทธิ์แสดงความคิดเห็น ----------------------------- {% endcomment %}
                 {% if perms.blogger.add_comment %}
                     <div class="col-md-8 m-2" style="padding-right: 0; padding-left: 0; margin-left: 8;">
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
@@ -69,8 +91,14 @@
                         </div>
                     </div>
                 {% endif %}
+                {% comment %} ------------------------------------------------------------------------------------------ {% endcomment %}
             </div>
         </div>
     </div>
 </form>
+<script>
+    function popup(){
+        alert('ลบความคิดเห็นสำเร็จ')
+    }
+</script>
 {% endblock %}

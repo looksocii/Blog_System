@@ -1,51 +1,90 @@
 {% extends "public_base.html" %}
 {% block content %}
 {% load static %}
-        <div class="row mt-4">
-            <div class="col-sm-12">
-                <form action="{% url 'index' %}" class="form-inline" method="POST">
-                {% csrf_token %}
-                    <div class="form-group mx-sm-2 mb-2">
-                        <input type="text" class="form-control" placeholder="ค้นหาบทความ" name="blog">
-                    </div>
-                    <button type="submit" class="btn btn-outline-warning mb-2">ค้นหา</button>
-                </form>
+<div class="row mt-4 mb-1">
+    <div class="col-sm-12">
+        <form action="{% url 'index' %}" class="form-inline" method="POST">
+            {% csrf_token %}
+            <div class="form-group mx-sm-2 mb-2">
+                <input type="text" class="form-control" placeholder="ค้นหาบทความ" name="blog">
             </div>
-        </div>
-    <div class="row">
-        <div class="col-sm-12 ml-3">
-            {% if post_all.count == 0 %}
-                <h5>No Data</h2>
-            {% endif %}
-        </div>
-        {% for post in post_all %}
-                <div class="col-sm-3">
-                    <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 16.2rem; height: 16rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"><b>{{ post.title }}</b></h5>
-                            <p class="card-text" style="font-size: 14px; height:9em; white-space: wrap; overflow: hidden; text-overflow: ellipsis;">{{ post.content }}</p>
-                            <div class="row">
-                                <div class="col-sm-6 mb-3" style="margin-top: -5.5;">
-                                    {% if post.status == False %}
-                                        <img src="{% static '/photo/hide.png' %}" width="30px">
+            <button type="submit" class="btn btn-outline-warning mb-2">ค้นหา</button>
+        </form>
+    </div>
+    {% comment %} ---------- เมื่อมีการส่งค่าการค้นหากลับมา ---------- {% endcomment %}
+    {% if blog_name %}
+        {% if post_all.count > 0 %}
+            <div class="col-sm-12 ml-3 mb-2" style="margin-top: -10;">
+                {{ blog_name }}
+            </div>
+        {% else %}
+            <div class="col-sm-12 ml-3 mb-2" style="margin-top: -10;">
+                ไม่พบบทความ
+            </div>
+        {% endif %}
+    {% endif %}
+    {% comment %} ---------------------------------------------= {% endcomment %}
+</div>
+<div class="row">
+    {% for post in post_all %}
+        <div class="col-sm-3">
+            <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 16.2rem; height: 16rem;">
+                <div class="card-body">
+                    <h5 class="card-title"
+                        style="height:1.4em; white-space: wrap; overflow: hidden; text-overflow: ellipsis;">
+                        <b>{{ post.title }}</b></h5>
+                    <p class="card-text"
+                        style="font-size: 14px; height:9em; white-space: wrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{ post.content }}</p>
+                    <div class="row">
+                        <div class="col-sm-6 mb-3" style="margin-top: -6;">
+                            {% comment %} ------------------------------------- ให้แสดงเฉพาะ Blogger เท่านั้น ------------------------------------- {% endcomment %}
+                            {% if request.user.is_superuser %}
+                                {% for c in com %}
+                                    {% if c.0 == post.id %}
+                                        {{ c.1 }}
                                     {% endif %}
-                                </div>
-                                <div class="col-sm-6 text-right">
-                                    <a href="{% url 'blog' post.id %}" class="badge badge-pill badge-warning">อ่านเพิ่มเติม</a>
-                                </div>
-                            </div>
+                                {% endfor %}
+
+                                {% if post.status == False %}
+                                    <a href="{% url 'status' post.id %}" onclick="show()"><img src="{% static '/photo/hide.png' %}" width="30.5px"></a>
+                                {% else %}
+                                    <a href="{% url 'status' post.id %}" onclick="hide()"><img src="{% static '/photo/see.png' %}" width="27.5px"></a>
+                                {% endif %}
+                                    <a href="{% url 'post_remove' post.id %}" onclick="remove()"><img src="{% static '/photo/remove.png' %}" width="17px"></a>
+                            {% endif %}
+                            {% comment %} ------------------------------------- ให้แสดงเฉพาะ Blogger เท่านั้น ------------------------------------- {% endcomment %}
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="{% url 'blog' post.id %}" class="badge badge-pill badge-warning">อ่านเพิ่มเติม</a>
                         </div>
                     </div>
                 </div>
-        {% endfor %}
-    </div>
-    {% if perms.blogger.add_post %}
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4 mb-4">
-                <a href="{% url 'post' %}" type="button" type="button" class="btn btn-outline-warning btn-lg btn-block">เขียนบทความใหม่</a>
             </div>
-            <div class="col-4"></div>
         </div>
-    {% endif %}
+    {% endfor %}
+</div>
+{% comment %} ------------ เฉพาะผู้ที่มีสิทธิ์เพิ่มบทความเท่านั้น ------------ {% endcomment %}
+{% if perms.blogger.add_post %}
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 mb-4" style="margin-top: -4;">
+            <a href="{% url 'post' %}" type="button" type="button"
+                class="btn btn-warning btn-lg btn-block">เขียนบทความใหม่</a>
+        </div>
+        <div class="col-4"></div>
+    </div>
+{% endif %}
+{% comment %} ----------------------------------------------------- {% endcomment %}
+<script>
+    function remove() {
+        alert('ลบบทความสำเร็จ')
+    }
+    function show() {
+        alert('แสดงบทความสำเร็จ')
+    }
+    function hide() {
+        alert('ซ่อนบทความสำเร็จ')
+    }
+</script>
 {% endblock %}

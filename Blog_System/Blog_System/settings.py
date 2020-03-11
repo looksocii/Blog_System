@@ -77,12 +77,20 @@ WSGI_APPLICATION = 'Blog_System.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'it61070139_DBstore',
+    #     'USER': 'it61070139_aop',
+    #     'PASSWORD': '00000',
+    #     'HOST': 'ihost.it.kmitl.ac.th',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'it61070139_DBstore',
-        'USER': 'it61070139_aop',
-        'PASSWORD': '00000',
-        'HOST': 'ihost.it.kmitl.ac.th',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Blog_System',
+        'USER': 'postgres',
+        'PASSWORD': '528491',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -129,4 +137,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-LOGIN_URL = '/search/login/'
+LOGIN_URL = '/login/'

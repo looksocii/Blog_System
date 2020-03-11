@@ -8,47 +8,54 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="first_name">First Name ( ชื่อจริง )</label>
-                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น พันธกานต์" name="first_name">
+                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น พันธกานต์" name="first_name"
+                {% if error %}
+                    value="{{ first_name }}"
+                {% endif %} >
             </div>
             <div class="form-group col-md-6">
                 <label for="last_name">Last Name ( นามสกุล )</label>
-                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น แก้วสังหาร" name="last_name">
+                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น แก้วสังหาร" name="last_name"
+                {% if error %}
+                    value="{{ last_name }}"
+                {% endif %} >
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="username">Username ( ชื่อผู้ใช้เข้าสู่ระบบ )</label>
-                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น aop1122" name="username">
+                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น aop1122" name="username"
+                {% if error %}
+                    value="{{ username }}"
+                {% endif %} >
             </div>
             <div class="form-group col-md-6">
                 <label for="password">Password ( รหัสผ่าน )</label>
-                <input type="password" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น Puntakarn999" name="password">
+                <input type="password" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น Puntakarn999" name="password"
+                {% if error %}
+                    value="{{ password }}"
+                {% endif %} >
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="username">Email ( อีเมล )</label>
-                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น exe123@exe.com" name="email">
+                <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น exe123@exe.com" name="email"
+                {% if error %}
+                    value="{{ email }}"
+                {% endif %} >
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
-                <br>
-                <button type="submit" class="btn btn-outline-warning btn-lg btn-block" onclick="popup()">Sign Up</button>
+                {% if error %}
+                    <small class="form-text text-danger text-center" style="margin-bottom: 4;">{{ error }}</small>
+                {% else %}
+                    <br>
+                {% endif %}
+                <button type="submit" class="btn btn-outline-warning btn-lg btn-block">Sign Up</button>
                 <small class="font-italic text-center form-text text-muted">© Copyright 2020 By.Puntakarn</small>
             </div>
         </div>
     </form>
-    <script>
-        function popup(){
-            alert('Sign Up Done !!!!!!!')
-            {% comment %} Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-                timer: 1500
-            }) {% endcomment %}
-        }
-    </script>
 {% endblock %}

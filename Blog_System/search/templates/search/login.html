@@ -11,17 +11,32 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username ( ชื่อผู้ใช้ )</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="ชื่อผู้ใช้" name="username">
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="ชื่อผู้ใช้" name="username"
+                    {% if error %}
+                        value="{{ username }}"
+                    {% endif %}
+                    >
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password ( รหัสผ่าน )</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="รหัสผ่าน" name="password">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="รหัสผ่าน" name="password"
                     {% if error %}
-                        <small class="form-text text-danger text-center">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูก</small>
-                    {% else %}
-                        <small class="form-text text-muted">ตรวจสอบอีเมลหรือชื่อผู้ใช้ และ รหัสผ่านให้ถูกต้องก่อนเข้าสู่ระบบ</small>
+                        value="{{ password }}"
                     {% endif %}
+                    >
                 </div>
+                {% comment %} ----- รับตัวแปร next_url เมื่อมีการส่งค่ามา ----- {% endcomment %}
+                <input type="hidden" name="next_url" value="{{ next_url }}">
+                {% comment %} ------------------------------------------ {% endcomment %}
+
+                {% comment %} --------------------------------- เช็คว่ามี error หรือไม่ ( ชื่อผู้ใช้และรหัสผ่านไม่ถูกต้อง ) --------------------------------- {% endcomment %}
+                    {% if error %}
+                        <small class="form-text text-danger text-center" style="margin-bottom: 4;">{{ error }}</small>
+                    {% else %}
+                        <small class="form-text text-muted text-center" style="margin-bottom: 4;">ตรวจสอบอีเมลหรือชื่อผู้ใช้ และ รหัสผ่านให้ถูกต้องก่อนเข้าสู่ระบบ</small>
+                    {% endif %}
+                {% comment %} ---------------------------------------------------------------------------------------------------------------- {% endcomment %}
+
                 <button type="submit" class="btn btn-outline-warning btn-lg btn-block">Login</button>
                 <small class="font-italic text-center form-text text-muted">© Copyright 2020 By.Puntakarn</small>
             </form>

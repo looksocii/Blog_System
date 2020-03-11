@@ -1,0 +1,44 @@
+{% extends "public_base.html" %}
+{% block content %}
+    <div class="p-5 text-center">
+        <h2>เปลี่ยนรหัสผ่าน</h2>
+        <small class="form-text text-muted">Username : {{ request.user.username }}</small>
+    </div>
+    <div class="row p-3">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+            <form action="{% url 'change_pass' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">New Password ( รหัสผ่านใหม่ )</label>
+                    <input type="password" class="form-control" id="exampleInputEmail1" placeholder="รหัสผ่าน" name="password1"
+                    {% if error %}
+                        value="{{ password1 }}"
+                    {% endif %}
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password ( ยืนยันรหัสผ่าน )</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="กรอกรหัสผ่านอีกครั้ง" name="password2"
+                    {% if error %}
+                        value="{{ password2 }}"
+                    {% endif %}
+                    >
+                </div>
+                <input type="hidden" name="next_url" value="{{ next_url }}">
+                    {% comment %} ------------------------------------ ถ้ามีการส่ง error กลับมา ( รหัสผ่านไม่ตรงกัน ) ------------------------------------ {% endcomment %}
+                    {% if error %}
+                        <small class="form-text text-danger text-center" style="margin-bottom: 4;">{{ error }}</small>
+                    {% else %}
+                        <small class="form-text text-muted text-center" style="margin-bottom: 4;">ตรวจสอบรหัสผ่านให้แน่ใจก่อนเปลี่ยนรหัสผ่าน</small>
+                    {% endif %}
+                    {% comment %} ----------------------------------------------------------------------------------------------------------------- {% endcomment %}
+                <button type="submit" class="btn btn-outline-warning btn-lg btn-block">Change Password</button>
+                <small class="font-italic text-center form-text text-muted">© Copyright 2020 By.Puntakarn</small>
+            </form>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+{% endblock content %}
