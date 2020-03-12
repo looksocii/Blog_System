@@ -14,16 +14,14 @@
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="ชื่อผู้ใช้" name="username"
                     {% if error %}
                         value="{{ username }}"
-                    {% endif %}
-                    >
+                    {% endif %} required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password ( รหัสผ่าน )</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="รหัสผ่าน" name="password"
                     {% if error %}
                         value="{{ password }}"
-                    {% endif %}
-                    >
+                    {% endif %} required>
                 </div>
                 {% comment %} ----- รับตัวแปร next_url เมื่อมีการส่งค่ามา ----- {% endcomment %}
                 <input type="hidden" name="next_url" value="{{ next_url }}">

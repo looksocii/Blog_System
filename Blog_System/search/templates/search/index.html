@@ -6,7 +6,7 @@
         <form action="{% url 'index' %}" class="form-inline" method="POST">
             {% csrf_token %}
             <div class="form-group mx-sm-2 mb-2">
-                <input type="text" class="form-control" placeholder="ค้นหาบทความ" name="blog">
+                <input type="text" class="form-control" placeholder="ค้นหาบทความ" name="blog" required>
             </div>
             <button type="submit" class="btn btn-outline-warning mb-2">ค้นหา</button>
         </form>
@@ -64,18 +64,17 @@
         </div>
     {% endfor %}
 </div>
-{% comment %} ------------ เฉพาะผู้ที่มีสิทธิ์เพิ่มบทความเท่านั้น ------------ {% endcomment %}
+{% comment %} ------------------------------------ เฉพาะผู้ที่มีสิทธิ์เพิ่มบทความเท่านั้น ------------------------------------ {% endcomment %}
 {% if perms.blogger.add_post %}
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4 mb-4" style="margin-top: -4;">
-            <a href="{% url 'post' %}" type="button" type="button"
-                class="btn btn-warning btn-lg btn-block">เขียนบทความใหม่</a>
+            <a href="{% url 'post' %}" type="button" type="button" class="btn btn-warning btn-lg btn-block">เขียนบทความใหม่</a>
         </div>
         <div class="col-4"></div>
     </div>
 {% endif %}
-{% comment %} ----------------------------------------------------- {% endcomment %}
+{% comment %} ----------------------------------------------------------------------------------------------------- {% endcomment %}
 <script>
     function remove() {
         alert('ลบบทความสำเร็จ')

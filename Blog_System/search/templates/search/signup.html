@@ -11,14 +11,14 @@
                 <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น พันธกานต์" name="first_name"
                 {% if error %}
                     value="{{ first_name }}"
-                {% endif %} >
+                {% endif %} required>
             </div>
             <div class="form-group col-md-6">
                 <label for="last_name">Last Name ( นามสกุล )</label>
                 <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น แก้วสังหาร" name="last_name"
                 {% if error %}
                     value="{{ last_name }}"
-                {% endif %} >
+                {% endif %} required>
             </div>
         </div>
         <div class="form-row">
@@ -27,14 +27,14 @@
                 <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น aop1122" name="username"
                 {% if error %}
                     value="{{ username }}"
-                {% endif %} >
+                {% endif %} required>
             </div>
             <div class="form-group col-md-6">
                 <label for="password">Password ( รหัสผ่าน )</label>
                 <input type="password" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น Puntakarn999" name="password"
                 {% if error %}
                     value="{{ password }}"
-                {% endif %} >
+                {% endif %} required>
             </div>
         </div>
         <div class="form-row">
@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" placeholder="ความยาวตัวอักษร 1-255 เช่น exe123@exe.com" name="email"
                 {% if error %}
                     value="{{ email }}"
-                {% endif %} >
+                {% endif %} required>
             </div>
         </div>
         <div class="form-row">
