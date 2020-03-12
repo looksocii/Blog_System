@@ -44,9 +44,9 @@ def index(request):
     # -------- แสดงเฉพาะบทความที่ไม่ถูกซ่อน ----------
     if request.user.is_superuser:
         # Blogger แสดงทุกบทความ
-        post_all = Post.objects.all()
+        post_all = Post.objects.all().order_by('id')
     else:
-        post_all = Post.objects.filter(status=True)
+        post_all = Post.objects.filter(status=True).order_by('id')
     # --------------------------------------------
 
     # -------- นับความคิดเห็นของแต่ละบทความ ----------
@@ -351,6 +351,7 @@ def status(request, change_status):
         post_all = Post.objects.all().order_by('id')
     else:
         post_all = Post.objects.filter(status=True).order_by('id')
+        
     com = Post.objects.annotate(Count('comment'))
     com = com.values_list('id', 'comment__count')
     # -----------------------------------------------
