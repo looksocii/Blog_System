@@ -76,22 +76,20 @@ WSGI_APPLICATION = 'Blog_System.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+# models อยู่ที่แอพ blogger ต้องทำการเชื่อม DataBase ก่อน ( migrate ) ถึงจะใช้งานได้
+# หลังจากตั้งค่า DataBase เสร็จแล้วให้ใช้คำสั่ง
+# - Python manage.py makemigrations
+# - Python manage.py migrate
 DATABASES = {
     # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'it61070139_DBstore',
-    #     'USER': 'it61070139_aop',
-    #     'PASSWORD': '00000',
-    #     'HOST': 'ihost.it.kmitl.ac.th',
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'Blog_System',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '528491',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Blog_System',
-        'USER': 'postgres',
-        'PASSWORD': '528491',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
 }
 
 

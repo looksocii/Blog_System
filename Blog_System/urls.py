@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from search import views
+from search import views # import views จากแอพ search เพื่อเอา path login, logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
