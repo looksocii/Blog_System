@@ -2,9 +2,9 @@
 
 # LAB 2
 
-**StudentID** : 61070139 <br>
+**StudentID** : 61070139
 **Name** : Puntakarn Kaewsanghan
 
-> King Mongkut's Institute of Technology Ladkrabang
+> <a href="https://www.kmitl.ac.th">King Mongkut's Institute of Technology Ladkrabang</a>
 
-```print("hello world")```
+'''print("hello world")'''
