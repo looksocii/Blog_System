@@ -1,2 +1,2 @@
 # Blog System Web Application
-### Uesing Django Web Framework (Python)
+### Using Django Web Framework (Python)
