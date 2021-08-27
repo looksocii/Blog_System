@@ -82,14 +82,14 @@ WSGI_APPLICATION = 'Blog_System.wsgi.application'
 # - Python manage.py makemigrations
 # - Python manage.py migrate
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'Blog_System',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '528491',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'BlogSystem',
+        'USER': 'postgres',
+        'PASSWORD': '528491',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
